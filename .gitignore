@@ -1,0 +1,13 @@
+# Virtuelle Umgebungen
+.venv/
+
+# macOS-spezifische Dateien
+.DS_Store
+
+# Python-Cache-Dateien
+__pycache__/
+*.pyc
+
+__pypackages__/
+
+.pdm-python
