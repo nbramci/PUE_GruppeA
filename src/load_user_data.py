@@ -4,18 +4,10 @@ import os
 from PIL import Image
 
 #example usage
-FILE_PATH = "data\person_db.json"  # Replace with your actual file path
+FILE_PATH = "data/person_db.json"
+DEFAULT_IMAGE =  "data/pictures/none.jpg"
 
 def load_user_data(file_path):
-    """
-    Load user data from a JSON file.
-
-    Args:
-        file_path (str): Path to the JSON file.
-
-    Returns:
-        dict: User data loaded from the JSON file.
-    """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
     
@@ -25,9 +17,6 @@ def load_user_data(file_path):
     return user_data
 
 def get_all_names(user_data):
-    """
-    Extract all user names from the user data.
-    """
     user_names = []
     #gehe durch alle Einträge in der JSON-Datei
     for person_dict in user_data:
@@ -42,17 +31,18 @@ def get_image(person_name):
     return image
 
 def get_image_path(current_user):
-    """
-    Get the image path for a given person name.
-    """
     firstname = current_user.split(", ")[1]
     lastname = current_user.split(", ")[0]
     user_data = load_user_data(FILE_PATH)
 
     for person_dict in user_data:
         if person_dict['firstname'] == firstname and person_dict['lastname'] == lastname:
-            path_to_image = person_dict['picture_path']
-    return path_to_image
+            relative_path = person_dict.get('picture_path', None)
+            if relative_path:
+                image_path = os.path.join(relative_path)
+                if os.path.exists(image_path):
+                    return image_path
+    return DEFAULT_IMAGE
 
 if __name__ == "__main__":
     user_data = load_user_data(FILE_PATH)
