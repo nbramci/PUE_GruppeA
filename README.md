@@ -1,5 +1,7 @@
 # PUE_GruppeA
 
+# Aufgabe 1
+
 ## Projektübersicht 
 Dieses Repository liest gegebene Leistungsdaten aus einer CSV-Datei aus, sortiert diese und erstellt dann ein Leistungsdiagramm (Power Curve).
 
@@ -19,13 +21,49 @@ Nachdem Sie das Skript ausgeführt haben finden sie das Leistungsdiagramm (Power
 
 
 
-## Aufgabe 2
-Erstellen eines UML - Diagramms für Aufgabe 2
+# Aufgabe 2
 
-## UML-Diagramm
+### UML-Diagramm
+
+Das folgende Use-Case-Diagramm stellt die Hauptfunktionen der EKG-Analyzer-App dar, sowie die Benutzerrollen und deren Berechtigungen:
 
 ![](data/docs/UC-Diagramm.png)
 
-## Flow Chart
+### Flow Chart
 
-![](data/docs/ekg_data._acticity.svg)
+Der folgende Flow-Chart zeigt die Verarbeitungsschritte und den logischen Ablauf der Aktivitätsanalyse:
+
+![](data/docs/ekg_data_acticity.svg)
+
+---
+
+## Beschreibung der App
+
+Die App dient der Auswertung von EKG-Testdaten und Herzfrequenzanalysen anhand von CSV-Dateien. Diagnostiker können dabei Versuchspersonen auswählen, Tests analysieren und Herzfrequenzzonen bestimmen. Zudem können Plots generiert und Daten ausgewertet werden.
+
+## Starten der App
+
+Voraussetzungen:
+- Python 3.x
+- PDM (Python Dependency Manager)
+
+### Installieren und Starten
+
+```bash
+# Repository klonen
+Repository klonen und Ordnerstruktur dem Code anpassen
+
+# PDM installieren
+pip install pdm
+
+# Abhängigkeiten installieren
+pdm install streamlit, pandas, plotly, PIL
+
+# Streamlit-App starten
+streamlit run main.py
+```
+
+## Screenshots der Anwendung
+
+![](data/docs/screenshot.png)
+![](data/docs/screenshot2.png)
