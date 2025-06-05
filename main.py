@@ -1,5 +1,5 @@
 import streamlit as st
-from src.load_user_data import get_image, load_user_data, get_all_names
+from src.load_user_data import load_user_objects, get_person_object_from_list_by_name
 from PIL import Image
 import pandas as pd
 from plotly import express as px
@@ -8,11 +8,13 @@ from src.analyze_hr_data import analyze_hr_data
 
 #sicherstellen, dass die Session-Variable existiert
 if "current_user" not in st.session_state:
-    st.session_state.current_user = ""
+    st.session_state.current_user_name = "NONE"
+if "current_user_name" not in st.session_state:
+    st.session_state.current_user_name = "NONE"
 
 FILE_PATH = "data/person_db.json"
-user_data = load_user_data(FILE_PATH)
-name_list = get_all_names(user_data)
+user_data = load_user_objects(FILE_PATH)
+name_list = [user.get_full_name() for user in user_data]
 
 
 #Eine Überschrift der ersten Ebene
@@ -22,15 +24,22 @@ st.title("EKG-APP")
 st.write("# Versuchsperson auswählen")
 
 #Auswahlbox
-st.session_state.current_user = st.selectbox(
+st.session_state["current_user_name"] = st.selectbox(
     "Wählen Sie eine Versuchsperson aus",
     options = name_list, key = "sbVersuchsperson")
 
-st.write("aktuelle Versuchsperson: ", st.session_state.current_user)
+st.write("aktuelle Versuchsperson: ", st.session_state["current_user_name"])
+
+st.session_state["current_user"] = get_person_object_from_list_by_name(st.session_state["current_user_name"], user_data)
+
+st.write(st.session_state["current_user"].id)
 
 
 #Bild mit Caption anzeigen
-st.image(get_image(st.session_state.current_user), caption=st.session_state.current_user)
+st.image(st.session_state["current_user"].picture_path, caption=st.session_state["current_user"].get_full_name())
+# Alter und maximale Herzfrequenz anzeigen
+st.write(f"Alter: {st.session_state['current_user'].calc_age()} Jahre")
+st.write(f"Maximale Herzfrequenz (geschätzt): {st.session_state['current_user'].calc_max_heart_rate('male')} bpm")
 
 #Daten anzeigen
 st.write("# Analyse der Aktivitätsdaten")
