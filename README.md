@@ -107,5 +107,5 @@ Die Funktion `power_curve()` befindet sich im Modul `powercurve.py` und berechne
 
 ## Screenshot der Power Curve
 
-![](data/docs/screenshot_LK2.png)
+![](data/docs/screenshot_lk2.png)
 
