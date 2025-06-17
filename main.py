@@ -1,5 +1,5 @@
 import streamlit as st
-from src.load_user_data import load_user_objects, get_person_object_from_list_by_name
+from src.read_person_data import load_user_objects, get_person_object_from_list_by_name
 from PIL import Image
 import pandas as pd
 from plotly import express as px
@@ -39,7 +39,7 @@ st.write(st.session_state["current_user"].id)
 st.image(st.session_state["current_user"].picture_path, caption=st.session_state["current_user"].get_full_name())
 # Alter und maximale Herzfrequenz anzeigen
 st.write(f"Alter: {st.session_state['current_user'].calc_age()} Jahre")
-st.write(f"Maximale Herzfrequenz (geschätzt): {st.session_state['current_user'].calc_max_heart_rate('male')} bpm")
+st.write(f"Maximale Herzfrequenz (geschätzt): {st.session_state['current_user'].calc_max_heart_rate()} bpm")
 
 #Daten anzeigen
 st.write("# Analyse der Aktivitätsdaten")
@@ -54,3 +54,29 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.write("Zusammenfassung nach Herzfrequenz-Zonen:")
 st.dataframe(zone_summary_df)
+
+# EKG-Tests visuelle und funktionale Einbindung
+from src.ekgdata import EKGdata
+
+st.write("# Analyse eines EKG-Tests")
+
+ekg_tests = st.session_state["current_user"].ekg_tests
+if ekg_tests:
+    ekg_options = {f"Test {t['id']} am {t['date']}": t["id"] for t in ekg_tests}
+    selected_label = st.selectbox("Wählen Sie einen EKG-Test", list(ekg_options.keys()))
+    selected_id = ekg_options[selected_label]
+
+    ekg = EKGdata.load_by_id(selected_id, user_data)
+    ekg.find_peaks()
+    estimated_hr = ekg.estimate_hr()
+    ekg.plot_time_series()
+
+    st.plotly_chart(ekg.fig, use_container_width=True)
+    st.write(f"Geschätzte Herzfrequenz aus dem EKG: {round(estimated_hr)} bpm")
+else:
+    st.info("Keine EKG-Daten für diese Person verfügbar.")
+
+# Herzfrequenz-Verlauf anzeigen
+st.write("## Herzfrequenz-Verlauf")
+hr_fig = ekg.plot_hr_over_time()
+st.plotly_chart(hr_fig, use_container_width=True)
