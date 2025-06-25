@@ -109,3 +109,44 @@ Die Funktion `power_curve()` befindet sich im Modul `powercurve.py` und berechne
 
 ![](data/docs/screenshot_lk2.png)
 
+
+
+# Aufgabe 4
+
+## Projektübersicht
+
+Im Rahmen von Aufgabe 4 wurde die bestehende Streamlit-App zur Analyse von EKG-Testdaten erweitert und strukturell verbessert. Die Anwendung ermöglicht nun die Auswahl von Versuchspersonen und EKG-Tests, visualisiert die EKG-Zeitreihe sowie die Herzfrequenz über den Zeitverlauf, und stellt individuelle Testergebnisse grafisch dar.
+
+Zudem wurde das Projekt modularisiert: Die Personen- und EKG-Logik wurden in eigene Klassen ausgelagert, und die Benutzerverwaltung erfolgt über eine eigene Datenladefunktion. Dies erleichtert Wartung und Erweiterung der App.
+
+## Nutzung
+
+Die App kann direkt über Streamlit gestartet werden. Dabei wird automatisch die Datei `person_db.json` geladen, über die die Benutzerdaten und die jeweiligen EKG-Tests verfügbar sind.
+
+### Voraussetzungen
+
+- Python 3.x
+- PDM (Python Dependency Manager)
+- Abhängigkeiten: `streamlit`, `pandas`, `plotly`, `Pillow`, `scipy`
+
+### Installation und Ausführung
+
+```bash
+# Repository klonen
+Repository klonen und Ordnerstruktur dem Code anpassen
+
+# PDM installieren (falls noch nicht vorhanden)
+pip install pdm
+
+# Abhängigkeiten installieren
+pdm install
+
+# App starten
+streamlit run main.py
+```
+
+## Screenshots der App
+
+![](data/docs/screenshot_ekg.png)
+![](data/docs/screenshot_hf.png)
+

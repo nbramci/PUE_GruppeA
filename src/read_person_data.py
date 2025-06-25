@@ -1,7 +1,10 @@
 import json
 import os
-from person import Person
+from .person import Person  # Relativer Modulimport
 
+# -------------------- Personenbezogene Datenverarbeitung --------------------
+
+# Lädt alle Benutzer:innen aus einer JSON-Datei und erstellt Person-Objekte
 def load_user_objects(file_path):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {file_path} does not exist.")
@@ -22,6 +25,7 @@ def load_user_objects(file_path):
 
     return person_list
 
+# Sucht ein bestimmtes Person-Objekt aus der Liste anhand des Namens
 def get_person_object_from_list_by_name(current_user_name, users):
     firstname = current_user_name.split(", ")[1]
     lastname = current_user_name.split(", ")[0]
@@ -31,8 +35,3 @@ def get_person_object_from_list_by_name(current_user_name, users):
             return person
         else:
             None
-
-if __name__ == "__main__":
-    test_users = load_user_objects("data/person_db.json")
-    for user in test_users:
-        print(user.get_full_name())
